@@ -18,3 +18,8 @@ gem "tzinfo-data", platforms: [:mswin, :mingw, :jruby]
 gem "net-ssh", "2.9.2"
 gem "mime-types", "2.6.1"
 ######################
+
+######################
+# Additional gems
+gem "jquery-middleman"
+######################
