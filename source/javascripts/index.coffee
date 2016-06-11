@@ -27,6 +27,10 @@ $ ->
                 )
               )
             window.block = false
+
+            # If there is no scrollbar.
+            if $("body").height() <= $(window).height()
+              addPics()
         })
       error: (jqXHR, textStatus, errorThrown) ->
         notify(JSON.stringify(['AJAX Error', jqXHR, textStatus, errorThrown]))
@@ -55,7 +59,7 @@ $ ->
       $(window).scroll ->
         scrollPos = $(window).scrollTop()
         if scrollPos > oldScrollPos
-          if ($(document).height() - $(window).height() - $(window).scrollTop()) < 300
+          if ($(document).height() - $(window).height() - $(window).scrollTop()) < INFINITE_SCROLL_OFFSET
             if !window.block
               addPics()
         oldScrollPos = scrollPos

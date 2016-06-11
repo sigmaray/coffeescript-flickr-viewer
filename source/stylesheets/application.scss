@@ -10,15 +10,20 @@ body {
   }
 }
 
-#index_page {
-  #hint_links {
-    a {
-      // border-botton: 2px dotted #000;
-      margin: 0 8px;
-    }
+#hint_links {
+  a {
+    // border-botton: 2px dotted #000;
+    margin: 0 15px;
   }
+}
 
+#preloader {
+  margin-top: 15px 0;
+}
+
+#index_page {
   #images a {
+    display: inline-block;
     margin: 10px;
   }
 }

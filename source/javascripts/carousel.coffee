@@ -28,12 +28,12 @@ $ ->
       })
 
     addPics = ->
-      downloadPics($('#searchInput').val(), page, window.CAROUSEL_PER_PAGE)
+      downloadPics($('#searchInput').val(), page, CAROUSEL_PER_PAGE)
       page++
 
     doStuff = (e) ->
       # console.log('L89')
-      if window.tmout?
+      if tmout?
           # console.log(["l41", 'clearing timeout'])
           window.clearTimeout(tmout)
 
@@ -65,7 +65,7 @@ $ ->
         $('#img_container').append($('<img>').attr('src', imgs[i].bigImageSrc));
         i++;
         if i < imgs.length
-          window.tmout = window.setTimeout(showImageAndStartTimer, window.CAROUSEL_TIMEOUT_MILLISECONDS);
+          window.tmout = window.setTimeout(showImageAndStartTimer, CAROUSEL_TIMEOUT_MILLISECONDS);
         else
           page++
           imgs = []
