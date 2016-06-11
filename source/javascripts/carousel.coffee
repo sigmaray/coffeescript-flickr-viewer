@@ -45,6 +45,10 @@ $ ->
         if e.which == 13
           doStuff()
 
+      $('#hint_links  a').click ->
+        $('#searchInput').val(($(this).text().trim()))
+        doStuff()
+
     initCarousel = ->
       i = 0
       console.log('L107')
