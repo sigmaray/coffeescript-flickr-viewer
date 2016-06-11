@@ -46,6 +46,9 @@ $ ->
       $('#goButton').click ->
         doStuff()
 
+      $('#hint_links  a').click ->
+        $('#searchInput').val(($(this).text().trim()))
+        doStuff()
 
       $(window).scroll ->
         scrollPos = $(window).scrollTop()

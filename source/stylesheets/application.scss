@@ -4,8 +4,11 @@ body {
   margin: 0;
 }
 
-form {
-  margin-bottom: 20px;
+#hint_links {
+  a {
+    // border-botton: 2px dotted #000;
+    margin: 0 8px;
+  }
 }
 
 #images a {
