@@ -1,10 +1,6 @@
 # Code is crap
 # TODO: Refactor
 
-# Settings
-API_KEY = '4cc2a6e2419deebfe86eca026cfda157'
-PER_PAGE = 20
-
 $ ->
   if $('#index_page').length
     page = 1

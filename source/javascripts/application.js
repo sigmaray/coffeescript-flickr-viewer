@@ -1,2 +1,5 @@
 //= require jquery
-//= require_tree .
+//= require 'settings'
+//= require 'main'
+//= require 'carousel'
+
