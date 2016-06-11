@@ -31,9 +31,9 @@ $ ->
             # If there is no scrollbar.
             if $("body").height() <= $(window).height()
               addPics()
-        })
-      error: (jqXHR, textStatus, errorThrown) ->
-        notify(JSON.stringify(['AJAX Error', jqXHR, textStatus, errorThrown]))
+        error: (jqXHR, textStatus, errorThrown) ->
+          notify(JSON.stringify(['AJAX Error', jqXHR, textStatus, errorThrown]))
+      })
 
     addPics = ->
       downloadPics($('#searchInput').val(), page)
