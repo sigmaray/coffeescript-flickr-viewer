@@ -20,9 +20,11 @@ $ ->
             $.each data.photos.photo, (i, item) ->
               # console.log(JSON.stringify(item))
               src = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_m.jpg'
-              bigImageSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_c.jpg'
+              # bigImageSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_c.jpg'
+              # bigImageSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_h.jpg'
+              flickrUrl = 'https://www.flickr.com/photos/' + item.owner + '/' + item.id
               $('#images').append(
-                $('<a>').attr('href', bigImageSrc).attr('target', '_blank').append(
+                $('<a>').attr('href', flickrUrl).attr('target', '_blank').append(
                   $('<img/>').attr('src', src).attr('class', 'flickr_image')
                 )
               )
