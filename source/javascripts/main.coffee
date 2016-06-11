@@ -34,10 +34,18 @@ $ ->
       page++
 
     handleEvents = ->
-      $('#goButton').click ->
+      doStuff = ->
         $('#images').html('')
         page = 0
         addPics()
+
+      $('#searchInput').keypress (e)->
+        if e.which == 13
+          doStuff()
+
+      $('#goButton').click ->
+        doStuff()
+
 
       $(window).scroll ->
         scrollPos = $(window).scrollTop()
