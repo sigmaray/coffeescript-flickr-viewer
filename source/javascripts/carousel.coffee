@@ -46,8 +46,6 @@ $ ->
       addPics()
 
     handleEvents = ->
-
-
       $('#goButton').click ->
         doStuff()
 
@@ -59,16 +57,29 @@ $ ->
         $('#searchInput').val(($(this).text().trim()))
         doStuff()
 
+    calculateImageMaxHeight = ->
+      mh = Math.floor($(document).height() / 100) * 70
+      if mh > 300
+        mh -= 30
+      mh
+
     initCarousel = ->
       i = 0
       # console.log('L107')
       searchText = $('#searchInput').val()
       showImageAndStartTimer = ->
         $('#img_container').html('');
+
         # $('#img_container').append($('<img>').attr('src', imgs[i].src));
+
+
+        # Crappy crap
+        # Make image not overflow
+        # $('#img_container').html('');
+
         $('#img_container').append(
           $('<a>').attr('href', imgs[i].flickrUrl).attr('target', '_blank').append(
-            $('<img/>').attr('src', imgs[i].src)
+            $('<img/>').attr('src', imgs[i].src).attr('style', 'max-height: ' + calculateImageMaxHeight() + 'px;')
           )
         )
         i++;
