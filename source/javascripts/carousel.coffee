@@ -58,7 +58,7 @@ $ ->
         doStuff()
 
     calculateImageMaxHeight = ->
-      mh = Math.floor($(document).height() / 100) * 70
+      mh = Math.floor($(document).height() / 100) * 75
       if mh > 300
         mh -= 30
       mh
