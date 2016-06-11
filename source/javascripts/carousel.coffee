@@ -4,79 +4,62 @@
 $ ->
   if $('#carousel_page').length
     page = 1
-    window.block = false
     scrollPos = 0
     oldScrollPos = 0
     imgs = []
 
     downloadPics = (pic, page = 1, per_page = PER_PAGE) ->
       url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + API_KEY + '&text=' + pic + '&safe_search=1&page=' + page + '&per_page=' + per_page
-      window.block = true
       $('#preloader').show()
       $.getJSON url + '&format=json&jsoncallback=?', (data) ->
         $('#preloader').hide()
+        imgs = []
         $.each data.photos.photo, (i, item) ->
-          # console.log(JSON.stringify(item))
           src = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_m.jpg'
           bigImageSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_c.jpg'
           imgs.push({src: src, bigImageSrc: bigImageSrc})
-          # $('#images').append(
-          #   $('<a>').attr('href', bigImageSrc).attr('target', '_blank').append(
-          #     $('<img/>').attr('src', src).attr('class', 'flickr_image')
-          #   )
-          # )
-        window.block = false
-        # alert(JSON.stringify(imgs))
         initCarousel()
 
     addPics = ->
-      downloadPics($('#searchInput').val(), page)
+      downloadPics($('#searchInput').val(), page, window.CAROUSEL_PER_PAGE)
       page++
 
-    btnNum = 0
-    handleEvents = ->
+    doStuff = (e) ->
       console.log('L89')
-      $('form').submit ->
-        console.log('L90')
-        btnNum++
-        # $('#images').html('')
-        imgs = []
-        page = 0
-        addPics()
+      if window.tmout?
+          console.log(["l41", 'clearing timeout'])
+          window.clearTimeout(tmout)
 
-      # $(window).scroll ->
-      #   scrollPos = $(window).scrollTop()
-      #   if scrollPos > oldScrollPos
-      #     if ($(document).height() - $(window).height() - $(window).scrollTop()) < 300
-      #       if !window.block
-      #         addPics()
-      #   oldScrollPos = scrollPos
+      console.log('L90')
+      imgs = []
+      page = 0
+      addPics()
+
+    handleEvents = ->
+
+
+      $('#goButton').click ->
+        doStuff()
+
+      $('#searchInput').keypress (e)->
+        if e.which == 13
+          doStuff()
 
     initCarousel = ->
       i = 0
-      # imgLength = imgs.le
-      oldBtnNum = btnNum
       console.log('L107')
       tttext = $('#searchInput')
-      show_popup = ->
-        # if btnNum == oldBtnNum # check if button was not clicked one more time
-        # if true
-        console.log([btnNum, oldBtnNum])
-        if btnNum == oldBtnNum # check if button was not clicked one more time
-          if !window.block
-            console.log('L111')
-            # alert('L111')
-            $('#img_container').html('');
-            # alert(imgs[i].src);
-            $('#img_container').append($('<img>').attr('src', imgs[i].bigImageSrc));
-            i++;
-            if i < imgs.length
-              window.setTimeout(show_popup, 3000);
-            else
-              page++
-              imgs = []
-              downloadPics(tttext, page)
-      show_popup()
+      showImageAndStartTimer = ->
+        $('#img_container').html('');
+        $('#img_container').append($('<img>').attr('src', imgs[i].bigImageSrc));
+        i++;
+        if i < imgs.length
+          window.tmout = window.setTimeout(showImageAndStartTimer, window.CAROUSEL_TIMEOUT_MILLISECONDS);
+        else
+          page++
+          imgs = []
+          downloadPics(tttext, page)
+      showImageAndStartTimer()
 
 
     console.log("L132")
