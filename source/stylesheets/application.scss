@@ -4,13 +4,37 @@ body {
   margin: 0;
 }
 
-#hint_links {
+#menu {
   a {
-    // border-botton: 2px dotted #000;
     margin: 0 8px;
   }
 }
 
-#images a {
-  margin: 10px;
+#index_page {
+  #hint_links {
+    a {
+      // border-botton: 2px dotted #000;
+      margin: 0 8px;
+    }
+  }
+
+  #images a {
+    margin: 10px;
+  }
+}
+
+#carousel_page {
+  #header {
+    height: 30%;
+  }
+
+  #rest {
+    height: 70%;
+
+    #img_container {
+      img {
+        max-height: 400px;
+      }
+    }
+  }
 }
