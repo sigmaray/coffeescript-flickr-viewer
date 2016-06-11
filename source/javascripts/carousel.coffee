@@ -11,24 +11,30 @@ $ ->
     downloadPics = (pic, page = 1, per_page = PER_PAGE) ->
       imgs = []
       url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + API_KEY + '&text=' + pic + '&safe_search=1&page=' + page + '&per_page=' + per_page
-      $.getJSON url + '&format=json&jsoncallback=?', (data) ->
-        $.each data.photos.photo, (i, item) ->
-          src = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_m.jpg'
-          bigImageSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_c.jpg'
-          imgs.push({src: src, bigImageSrc: bigImageSrc})
-        initCarousel()
+      $.ajax({
+        dataType: "json"
+        url: url + '&format=json&jsoncallback=?'
+        success: (data) ->
+          $.each data.photos.photo, (i, item) ->
+            src = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_m.jpg'
+            bigImageSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_c.jpg'
+            imgs.push({src: src, bigImageSrc: bigImageSrc})
+          initCarousel()
+        error: (jqXHR, textStatus, errorThrown) ->
+          notify(JSON.stringify(['AJAX Error', jqXHR, textStatus, errorThrown]))
+      })
 
     addPics = ->
       downloadPics($('#searchInput').val(), page, window.CAROUSEL_PER_PAGE)
       page++
 
     doStuff = (e) ->
-      console.log('L89')
+      # console.log('L89')
       if window.tmout?
-          console.log(["l41", 'clearing timeout'])
+          # console.log(["l41", 'clearing timeout'])
           window.clearTimeout(tmout)
 
-      console.log('L90')
+      # console.log('L90')
       imgs = []
       page = 0
       addPics()
@@ -49,7 +55,7 @@ $ ->
 
     initCarousel = ->
       i = 0
-      console.log('L107')
+      # console.log('L107')
       searchText = $('#searchInput').val()
       showImageAndStartTimer = ->
         $('#img_container').html('');
@@ -64,9 +70,9 @@ $ ->
       showImageAndStartTimer()
 
 
-    console.log("L132")
+    # console.log("L132")
     handleEvents()
-    console.log("L133")
+    # console.log("L133")
     addPics()
 
-console.log('L137')
+# console.log('L137')
