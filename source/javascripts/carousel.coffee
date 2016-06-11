@@ -19,11 +19,12 @@ $ ->
             notify(JSON.stringify(["Problem with data", data]))
           else
             $.each data.photos.photo, (i, item) ->
-              src = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_m.jpg'
+              # src = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_m.jpg'
+              src = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_h.jpg'
               # bigImageSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_c.jpg'
               # bigImageSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_h.jpg'
               flickrUrl = 'https://www.flickr.com/photos/' + item.owner + '/' + item.id
-              imgs.push({src: src, bigImageSrc: flickrUrl})
+              imgs.push({src: src, flickrUrl: flickrUrl})
             initCarousel()
         error: (jqXHR, textStatus, errorThrown) ->
           notify(JSON.stringify(['AJAX Error', jqXHR, textStatus, errorThrown]))
@@ -64,7 +65,12 @@ $ ->
       searchText = $('#searchInput').val()
       showImageAndStartTimer = ->
         $('#img_container').html('');
-        $('#img_container').append($('<img>').attr('src', imgs[i].bigImageSrc));
+        # $('#img_container').append($('<img>').attr('src', imgs[i].src));
+        $('#img_container').append(
+          $('<a>').attr('href', imgs[i].flickrUrl).attr('target', '_blank').append(
+            $('<img/>').attr('src', imgs[i].src)
+          )
+        )
         i++;
         if i < imgs.length
           window.tmout = window.setTimeout(showImageAndStartTimer, CAROUSEL_TIMEOUT_MILLISECONDS);
