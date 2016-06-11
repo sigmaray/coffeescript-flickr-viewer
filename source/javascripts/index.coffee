@@ -13,17 +13,20 @@ $ ->
         dataType: "json"
         url: url + '&format=json&jsoncallback=?'
         success: (data) ->
-          $('#preloader').hide()
-          $.each data.photos.photo, (i, item) ->
-            # console.log(JSON.stringify(item))
-            src = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_m.jpg'
-            bigImageSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_c.jpg'
-            $('#images').append(
-              $('<a>').attr('href', bigImageSrc).attr('target', '_blank').append(
-                $('<img/>').attr('src', src).attr('class', 'flickr_image')
+          if !data["photos"]?
+            notify(JSON.stringify(["Problem with data", data]))
+          else
+            $('#preloader').hide()
+            $.each data.photos.photo, (i, item) ->
+              # console.log(JSON.stringify(item))
+              src = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_m.jpg'
+              bigImageSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_c.jpg'
+              $('#images').append(
+                $('<a>').attr('href', bigImageSrc).attr('target', '_blank').append(
+                  $('<img/>').attr('src', src).attr('class', 'flickr_image')
+                )
               )
-            )
-          window.block = false
+            window.block = false
         })
       error: (jqXHR, textStatus, errorThrown) ->
         notify(JSON.stringify(['AJAX Error', jqXHR, textStatus, errorThrown]))

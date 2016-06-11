@@ -15,11 +15,14 @@ $ ->
         dataType: "json"
         url: url + '&format=json&jsoncallback=?'
         success: (data) ->
-          $.each data.photos.photo, (i, item) ->
-            src = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_m.jpg'
-            bigImageSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_c.jpg'
-            imgs.push({src: src, bigImageSrc: bigImageSrc})
-          initCarousel()
+          if !data["photos"]?
+            notify(JSON.stringify(["Problem with data", data]))
+          else
+            $.each data.photos.photo, (i, item) ->
+              src = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_m.jpg'
+              bigImageSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_c.jpg'
+              imgs.push({src: src, bigImageSrc: bigImageSrc})
+            initCarousel()
         error: (jqXHR, textStatus, errorThrown) ->
           notify(JSON.stringify(['AJAX Error', jqXHR, textStatus, errorThrown]))
       })
