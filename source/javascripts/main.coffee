@@ -29,12 +29,12 @@ $ ->
       downloadPics($('#searchInput').val(), page)
       page++
 
-    handleEvents = ->
-      doStuff = ->
-        $('#images').html('')
-        page = 0
-        addPics()
+    doStuff = ->
+      $('#images').html('')
+      page = 0
+      addPics()
 
+    handleEvents = ->
       $('#searchInput').keypress (e)->
         if e.which == 13
           doStuff()

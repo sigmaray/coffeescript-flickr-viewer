@@ -11,9 +11,7 @@ $ ->
     downloadPics = (pic, page = 1, per_page = PER_PAGE) ->
       imgs = []
       url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + API_KEY + '&text=' + pic + '&safe_search=1&page=' + page + '&per_page=' + per_page
-      # $('#preloader').show()
       $.getJSON url + '&format=json&jsoncallback=?', (data) ->
-        # $('#preloader').hide()
         $.each data.photos.photo, (i, item) ->
           src = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_m.jpg'
           bigImageSrc = 'http://farm' + item.farm + '.static.flickr.com/' + item.server + '/' + item.id + '_' + item.secret + '_c.jpg'
